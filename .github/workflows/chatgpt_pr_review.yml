@@ -2,9 +2,11 @@ name: PR Review
 permissions:
     contents: read
     pull-requests: write
-on: [push, workflow_dispatch]
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
 jobs: 
-  test:
+  GPT-Chat-PR-Review:
     runs-on: ubuntu-latest
     steps: 
      - name: Get code
@@ -12,7 +14,7 @@ jobs:
      - name: Chat GPT explain code
        uses: neerajaggarwal07/git-action-react-demo@main
        with:
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          openai_api_key: ${{ secrets.MY_OPENAI_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_pr_id: ${{ github.event.pull_request.number }}
     
